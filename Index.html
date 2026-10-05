@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Teachers' Day 🍎 | From Mclee Andrew O. Baguio</title>
+    <style>
+        :root {
+            --cream: #fff9eb;
+            --soft-yellow: #f9efc7;
+            --light-blue: #d7e8f5;
+            --white: #ffffff;
+            --chalkboard: #2a4757;
+            --chalkboard-light: #35586e;
+            --chalk-white: #f8f8f8;
+            --chalk-yellow: #fff59d;
+            --gold: #d4b86a;
+            --text-dark: #3a3a3a;
+            --text-muted: #666666;
+            --paper-line: #c9c9c9;
+        }
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        html {scroll-behavior: smooth;}
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--cream);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+        .floating-container {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+        }
+        .floating-item {
+            position: absolute;
+            animation: float linear infinite;
+            opacity: 0.4;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        .music-btn {
+            position: fixed; top: 20px; right: 20px;
+            background: var(--white); border: 2px solid var(--gold);
+            padding: 10px 16px; border-radius: 8px; cursor: pointer;
+            z-index: 100; box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            font-size: 16px; transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .music-btn:hover { transform: scale(1.05); }
+        .opening-screen {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background: linear-gradient(180deg, #e8d9b5 0%, var(--cream) 100%);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 50; transition: opacity 1s ease, transform 1s ease;
+        }
+        .opening-screen.hidden {
+            opacity: 0; pointer-events: none; transform: scale(1.05);
+        }
+        .classroom-scene {
+            position: relative; text-align: center;
+            width: 90%; max-width: 600px;
+        }
+        .chalkboard {
+            background: linear-gradient(145deg, var(--chalkboard), var(--chalkboard-light));
+            border: 12px solid #8b5a2b; border-radius: 6px;
+            padding: 40px 30px;
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.3), 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px; position: relative;
+        }
+        .chalkboard::before {
+            content: ''; position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 1px solid rgba(255,255,255,0.1); pointer-events: none;
+        }
+        .chalk-text {
+            font-family: 'Segoe Print', 'Bradley Hand', cursive;
+            color: var(--chalk-white); font-size: 22px;
+            line-height: 2; opacity: 0;
+            transform: translateY(10px); transition: all 1s ease;
+        }
+        .chalk-text.visible { opacity: 1; transform: translateY(0); }
+        .chalk-text-large {
+            font-family: 'Segoe Print', cursive; color: var(--chalk-yellow);
+            font-size: 28px; margin-top: 20px; opacity: 0;
+            transform: translateY(10px); transition: all 1.5s ease;
+        }
+        .chalk-text-large.visible { opacity: 1; transform: translateY(0); }
+        .classroom-decor {
+            display: flex; justify-content: center; gap: 30px;
+            margin-bottom: 30px; font-size: 32px; opacity: 0.7;
+        }
+        .enter-btn {
+            padding: 15px 45px;
+            background: linear-gradient(135deg, var(--gold), #c4a85a);
+            border: none; border-radius: 8px; font-size: 18px;
+            color: var(--white); cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 184, 106, 0.4);
+        }
+        .enter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(212, 184, 106, 0.5);
+        }
+        .main-content {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
+            padding: 60px 20px; max-width: 850px;
+            margin: 0 auto; position: relative; z-index: 10;
+        }
+        .main-content.visible { opacity: 1; transform: translateY(0); }
+        .section { margin-bottom: 80px; }
+        .section-title {
+            font-size: 28px; text-align: center; margin-bottom: 40px;
+            color: var(--chalkboard); position: relative;
+        }
+        .section-title::after {
+            content: ''; display: block; width: 80px; height: 3px;
+            background: var(--gold); margin: 10px auto 0; border-radius: 2px;
+        }
+        .chalkboard-section {
+            background: linear-gradient(145deg, var(--chalkboard), var(--chalkboard-light));
+            border: 10px solid #8b5a2b; border-radius: 6px;
+            padding: 40px 30px; color: var(--chalk-white);
+            font-family: 'Segoe Print', cursive; line-height: 2;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .chalkboard-section h2 {
+            color: var(--chalk-yellow); text-align: center; margin-bottom: 30px;
+        }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .school-card {
+            background: var(--white); border-radius: 12px;
+            padding: 25px 20px; cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+            border-left: 4px solid var(--gold);
+        }
+        .school-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 20px; font-weight: 600;
+            color: var(--chalkboard);
+        }
+        .card-icon { font-size: 28px; }
+        .card-message {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            color: var(--text-muted); line-height: 1.7;
+        }
+        .school-card.open .card-message {
+            max-height: 150px; padding-top: 15px;
+        }
+        .timeline {
+            position: relative; max-width: 550px; margin: 0 auto;
+        }
+        .timeline::before {
+            content: ''; position: absolute; left: 50%;
+            top: 0; bottom: 0; width: 3px;
+            background: linear-gradient(180deg, var(--gold), var(--soft-yellow));
+            transform: translateX(-50%);
+        }
+        .timeline-item {
+            position: relative; text-align: center;
+            padding: 20px 0; opacity: 0;
+            transform: translateY(20px); transition: all 0.7s ease;
+        }
+        .timeline-item.visible { opacity: 1; transform: translateY(0); }
+        .timeline-dot {
+            width: 16px; height: 16px; background: var(--gold);
+            border-radius: 50%; margin: 0 auto; position: relative; z-index: 2;
+        }
+        .timeline-content {
+            background: var(--white); padding: 15px 25px;
+            border-radius: 8px; display: inline-block;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05); margin-top: 8px;
+        }
+        .timeline-arrow {
+            text-align: center; font-size: 24px;
+            color: var(--gold); margin: 5px 0;
+        }
+        .timeline-note {
+            text-align: center; margin-top: 30px;
+            font-style: italic; color: var(--text-muted); font-size: 17px;
+        }
+        .notebook-paper {
+            background: var(--white);
+            background-image: linear-gradient(var(--paper-line) 1px, transparent 1px);
+            background-size: 100% 28px; padding: 30px 40px;
+            border-radius: 6px; box-shadow: 3px 3px 10px rgba(0,0,0,0.1);
+            position: relative; border-top: 3px solid var(--light-blue);
+        }
+        .notebook-paper::before {
+            content: ''; position: absolute; left: 30px;
+            top: 0; bottom: 0; width: 2px; background: var(--soft-yellow);
+        }
+        .handwritten-text {
+            font-family: 'Segoe Print', 'Bradley Hand', cursive;
+            font-size: 18px; line-height: 28px;
+            color: var(--text-dark); padding-left: 20px;
+        }
+        .handwritten-line {
+            opacity: 0; transform: translateY(8px); transition: all 0.8s ease;
+        }
+        .handwritten-line.visible { opacity: 1; transform: translateY(0); }
+        .gifts-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 30px; text-align: center;
+        }
+        .gift-item {
+            padding: 20px; opacity: 0; transform: translateY(20px);
+            transition: all 0.7s ease;
+        }
+        .gift-item.visible { opacity: 1; transform: translateY(0); }
+        .gift-icon {
+            font-size: 48px; margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        .gift-item:hover .gift-icon { transform: scale(1.15); }
+        .gift-label {
+            font-size: 16px; font-weight: 500; color: var(--chalkboard);
+        }
+        .final-section {
+            background: linear-gradient(145deg, var(--chalkboard), var(--chalkboard-light));
+            border-radius: 8px; padding: 60px 30px; text-align: center;
+            color: var(--chalk-white); margin-top: 60px;
+            opacity: 0; transform: translateY(30px); transition: all 1.5s ease;
+        }
+        .final-section.visible { opacity: 1; transform: translateY(0); }
+        .final-line {
+            font-family: 'Segoe Print', cursive; font-size: 24px;
+            margin-bottom: 20px; opacity: 0;
+            transform: translateY(10px); transition: all 1s ease;
+        }
+        .final-line.visible { opacity: 1; transform: translateY(0); }
+        .final-apple { font-size: 50px; margin: 30px 0; }
+        .final-signature {
+            margin-top: 40px; font-size: 20px;
+            color: var(--chalk-yellow); font-family: 'Segoe Print', cursive;
+        }
+        @media (max-width: 600px) {
+            .chalk-text { font-size: 18px; }
+            .chalk-text-large { font-size: 22px; }
+            .chalkboard-section { padding: 25px 18px; }
+            .notebook-paper { padding: 25px 20px; }
+            .handwritten-text { font-size: 16px; }
+            .gifts-grid { gap: 15px; }
+            .gift-icon { font-size: 36px; }
+            .timeline::before { left: 20px; }
+            .timeline-item { text-align: left; padding-left: 50px; }
+            .timeline-dot { margin: 0; position: absolute; left: 12px; top: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-container" id="floatingContainer"></div>
+    
+    <!-- 🎵 MUSIC BUTTON - Opens YouTube video of the song -->
+    <button class="music-btn" id="musicBtn" title="Play Song: Here, There and Everywhere">
+        🎵 Play Song
+    </button>
+
+    <div class="opening-screen" id="openingScreen">
+        <div class="classroom-scene">
+            <div class="chalkboard">
+                <p class="chalk-text" id="chalkLine1">Good teachers teach.</p>
+                <p class="chalk-text" id="chalkLine2">Great teachers inspire.</p>
+                <p class="chalk-text-large" id="chalkLine3">Happy Teachers' Day! 🍎📚</p>
+            </div>
+            <div class="classroom-decor">
+                <span>📖</span><span>✏️</span><span>📚</span><span>📐</span><span>🎓</span>
+            </div>
+            <button class="enter-btn" id="enterBtn">Enter the Classroom →</button>
+        </div>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <section class="section">
+            <h2 class="section-title">To All My Teachers 🍎</h2>
+            <div class="chalkboard-section">
+                <h2>To every teacher who has been part of my journey...</h2>
+                <p>You don't only teach lessons from books. You teach patience, discipline, responsibility, and confidence.</p>
+                <p>You encourage us when we struggle. You celebrate even our smallest improvements. You spend hours preparing lessons, checking papers, and finding ways to help us understand.</p>
+                <p>You help us discover what we are truly capable of. And your influence stays with us long after we leave your classroom.</p>
+                <p style="text-align: center; margin-top: 20px; color: var(--chalk-yellow);">Thank you for everything you do. 💛</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">More Than a Lesson ✨</h2>
+            <div class="cards-grid">
+                <div class="school-card" onclick="toggleCard(this)">
+                    <div class="card-header"><span class="card-icon">📚</span><span>Knowledge</span></div>
+                    <div class="card-message">You don't just give us information. You help us understand the world a little better, and inspire us to keep learning.</div>
+                </div>
+                <div class="school-card" onclick="toggleCard(this)">
+                    <div class="card-header"><span class="card-icon">✏️</span><span>Guidance</span></div>
+                    <div class="card-message">Whenever we feel lost or unsure, your advice helps us find our way again. Thank you for being our compass.</div>
+                </div>
+                <div class="school-card" onclick="toggleCard(this)">
+                    <div class="card-header"><span class="card-icon">🌱</span><span>Growth</span></div>
+                    <div class="card-message">You don't rush our progress. You guide us at our own pace, believing in our potential even when we doubt ourselves.</div>
+                </div>
+                <div class="school-card" onclick="toggleCard(this)">
+                    <div class="card-header"><span class="card-icon">💡</span><span>Inspiration</span></div>
+                    <div class="card-message">You don't just teach subjects — you awaken curiosity. You make us want to know more, understand deeper, and dream bigger.</div>
+                </div>
+                <div class="school-card" onclick="toggleCard(this)">
+                    <div class="card-header"><span class="card-icon">❤️</span><span>Patience</span></div>
+                    <div class="card-message">Thank you for your endless patience. For repeating, explaining, and guiding us without giving up. We know it's not always easy.</div>
+                </div>
+                <div class="school-card" onclick="toggleCard(this)">
+                    <div class="card-header"><span class="card-icon">⭐</span><span>Encouragement</span></div>
+                    <div class="card-message">Your words of encouragement stay with us long after class ends. Thank you for believing in us, often more than we believe in ourselves.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Behind Every Teacher 🕰️</h2>
+            <div class="timeline">
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content">Preparing lessons late at night</div></div>
+                <div class="timeline-arrow">↓</div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content">Checking our activities and papers</div></div>
+                <div class="timeline-arrow">↓</div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content">Answering our endless questions</div></div>
+                <div class="timeline-arrow">↓</div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content">Helping students who struggle</div></div>
+                <div class="timeline-arrow">↓</div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content">Encouraging us when we feel down</div></div>
+                <div class="timeline-arrow">↓</div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content">Doing it all again the next day</div></div>
+            </div>
+            <p class="timeline-note">"Sometimes students only see the lesson. We don't always see the effort behind it."</p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Words From a Student 📝</h2>
+            <div class="notebook-paper">
+                <div class="handwritten-text">
+                    <p class="handwritten-line">To my teachers,</p><br>
+                    <p class="handwritten-line">Thank you for every lesson, every reminder, every correction,</p>
+                    <p class="handwritten-line">every encouragement, and every time you believed in us.</p><br>
+                    <p class="handwritten-line">Some lessons may be forgotten with time, but the impact</p>
+                    <p class="handwritten-line">of a good teacher can stay with a student for years.</p><br>
+                    <p class="handwritten-line">Thank you for helping us become not only better students,</p>
+                    <p class="handwritten-line">but better people.</p><br>
+                    <p class="handwritten-line">Your work matters more than you may realize.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">What You Give Us 🌟</h2>
+            <div class="gifts-grid">
+                <div class="gift-item"><div class="gift-icon">📖</div><div class="gift-label">Knowledge</div></div>
+                <div class="gift-item"><div class="gift-icon">💪</div><div class="gift-label">Confidence</div></div>
+                <div class="gift-item"><div class="gift-icon">📏</div><div class="gift-label">Discipline</div></div>
+                <div class="gift-item"><div class="gift-icon">🔍</div><div class="gift-label">Curiosity</div></div>
+                <div class="gift-item"><div class="gift-icon">🌈</div><div class="gift-label">Hope</div></div>
+                <div class="gift-item"><div class="gift-icon">🧭</div><div class="gift-label">Direction</div></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="final-section" id="finalSection">
+                <p class="final-line" id="finalLine1">Thank you.</p>
+                <p class="final-line" id="finalLine2">Thank you for teaching us.</p>
+                <p class="final-line" id="finalLine3">Thank you for believing in us.</p>
+                <p class="final-line" id="finalLine4">Thank you for being patient with us.</p>
+                <p class="final-line" id="finalLine5">Thank you for helping us grow.</p>
+                <div class="final-apple">🍎</div>
+                <p class="final-line" id="finalLine6">Happy Teachers' Day!</p>
+                <p class="final-line" id="finalLine7" style="font-size: 20px;">To all the teachers who have been part of our journey,<br>thank you for making a difference.</p>
+                <div class="final-signature">
+                    From your student,<br>
+                    <strong>Mclee Andrew O. Baguio</strong><br>
+                    BSED 2A - Mathematics
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const container = docume
