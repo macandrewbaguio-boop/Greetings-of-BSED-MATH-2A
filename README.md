@@ -1,1 +1,0 @@
-# Greetings-of-BSED-MATH-2A
